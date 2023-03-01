@@ -183,12 +183,44 @@ class COP3014 {
 
 int main()
 {
-    cout << "Hello World!";
+    COP3014 student = COP3014();
+    student.setFirstName("Luiz");
+
+    cout << student.getFirstName() << " " << student.getQuiz1() << endl;
+    COP3014 student2("Giovanna", "Bruzzi", "Z2356824", 20, 19, 20, 98, 95);
+
+    cout << student2.getFirstName() << endl
+         << student2.getLastName() << endl
+         << student2.getZNumber() << endl
+         << student2.getQuiz2() << endl
+         << student2.getFinalExam();
+
     return 0;
 }
 
-/*NEXT, DEFINE THE CLASS METHODS*/
-
+//Constructor with arguments
+COP3014::COP3014(
+        string firstNameParam,
+        string lastNameParam,
+        string zNumberParam,
+        double quiz1Param,
+        double quiz2Param,
+        double quiz3Param,
+        double midtermExamParam,
+        double finalExamParam
+){
+    firstName = firstNameParam;
+    lastName = lastNameParam;
+    zNumber = zNumberParam;
+    quiz1 = quiz1Param;
+    quiz2 = quiz2Param;
+    quiz3 = quiz3Param;
+    midtermExam = midtermExamParam;
+    finalExam = finalExamParam;
+}
+//no arguments constructor
+COP3014::COP3014(){}
+//getters
 string COP3014::getFirstName(){ return firstName; }
 string COP3014::getLastName(){ return lastName; }
 string COP3014::getZNumber(){ return zNumber; }
@@ -197,14 +229,21 @@ double COP3014::getQuiz2(){ return quiz2; }
 double COP3014::getQuiz3(){ return quiz3; }
 double COP3014::getMidtermExam(){ return midtermExam; }
 double COP3014::getFinalExam(){ return finalExam; }
+//setters
+void COP3014::setFirstName(string name){ firstName = name; }
+void COP3014::setLastName(string name){ lastName = name; }
+void COP3014::setZNumber(string number){ zNumber = number; }
+void COP3014::setQuiz1(double grade){ quiz1 = grade; }
+void COP3014::setQuiz2(double grade){ quiz2 = grade; }
+void COP3014::setQuiz3(double grade){ quiz3 = grade; }
+void COP3014::setMidtermExam(double grade){ midtermExam = grade; }
+void COP3014::setFinalExam(double grade){ finalExam = grade; }
 
 
 
 
 
-
-
-
+/*NEXT, DEFINE THE remaining CLASS METHODS for calculations and output*/
 
 
 
