@@ -150,9 +150,9 @@ class COP3014 {
         double getMidtermExam();
         double getFinalExam();
         //Setter functions for all the member variables
-        void setFirstName(string firstName);
-        void setLastName(string lastName);
-        void setZNumber(string zNumber);
+        void setFirstName(string name);
+        void setLastName(string name);
+        void setZNumber(string number);
         void setQuiz1(double grade);
         void setQuiz2(double grade);
         void setQuiz3(double grade);
@@ -188,3 +188,25 @@ int main()
 }
 
 /*NEXT, DEFINE THE CLASS METHODS*/
+
+string COP3014::getFirstName(){ return firstName; }
+string COP3014::getLastName(){ return lastName; }
+string COP3014::getZNumber(){ return zNumber; }
+double COP3014::getQuiz1(){ return quiz1; }
+double COP3014::getQuiz2(){ return quiz2; }
+double COP3014::getQuiz3(){ return quiz3; }
+double COP3014::getMidtermExam(){ return midtermExam; }
+double COP3014::getFinalExam(){ return finalExam; }
+
+
+
+
+
+
+
+
+
+
+
+
+
