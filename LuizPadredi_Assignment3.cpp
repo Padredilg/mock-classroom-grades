@@ -124,13 +124,67 @@ Define the class along with prototypes for each method as public, and properties
 then define each method down below
 
 then on main create a few students, then call their output methods to print to screen
-
-
 */
 
+class COP3014 {
+    public:
+        //Constructor with arguments
+        COP3014(string firstName,
+                string lastName,
+                string zNumber,
+                double quiz1,
+                double quiz2,
+                double quiz3,
+                double midtermExam,
+                double finalExam);
+        //no arguments constructor
+        COP3014();
+
+        //Getter functions for all the member variables
+        string getFirstName();
+        string getLastName();
+        string getZNumber();
+        double getQuiz1();
+        double getQuiz2();
+        double getQuiz3();
+        double getMidtermExam();
+        double getFinalExam();
+        //Setter functions for all the member variables
+        void setFirstName(string firstName);
+        void setLastName(string lastName);
+        void setZNumber(string zNumber);
+        void setQuiz1(double grade);
+        void setQuiz2(double grade);
+        void setQuiz3(double grade);
+        void setMidtermExam(double grade);
+        void setFinalExam(double grade);
+
+        //computes the student’s total grade
+        double calculateFinalNumberGrade();
+        //computes the student’s final letter grade
+        double calculateFinalLetterGrade();
+        //checks whether the student was absent on any exam, and then automatically fails them by giving them an F.
+        void checkIfAbsentOnExams();
+        //displays the information of a student: including their z-number, and grades on all assignment to the screen.
+        void outputStudent();
+
+    private:
+        string firstName;
+        string lastName;
+        string zNumber;
+        double quiz1 = 100;
+        double quiz2 = 100;
+        double quiz3 = 100;
+        double midtermExam = 100;
+        double finalExam = 100;
+        double finalNumberGrade;
+        char finalLetterGrade;
+};
 
 int main()
 {
     cout << "Hello World!";
     return 0;
 }
+
+/*NEXT, DEFINE THE CLASS METHODS*/
