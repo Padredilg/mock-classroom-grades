@@ -23,13 +23,6 @@ g. An output function that displays the information of any student: including th
 */
 
 /*
-Once you generated the class definition with all its function definitions,
-the next step is to use the class and generate test cases.
-First, construct some objects of this class.
-Give them names to represent individual students.
-*/
-
-/*
 Every student has grades for each of the work assigned to them.
 These grades can be initialized in the constructor
 (initial value is 100, Canvas starts everyone off with 100)
@@ -40,31 +33,6 @@ Importantly,  each  student  gets  a  total  grade  and  a  letter  grade  which
 automatically.
 */
 
-/*
-The output function should be called on each student
-to print their information along with their grades to the screen.
-The output can look as follows:
-
-Frank Fabulous – Z12345678
-
-    Quiz 1: 20
-    Quiz 2: 20
-    Quiz 3: 10
-    Midterm: 0
-    Final: 100
-    Total grade: 66.67
-    Final grade: F
-
-Gina Genius – Z98765432
-
-    Quiz 1: 20
-    Quiz 2: 20
-    Quiz 3: 20
-    Midterm: 98
-    Final: 95
-    Total grade: 96.9
-    Final grade: A
-*/
 
 double calculateFinalNumberGrade(double quizOne, double quizTwo, double quizThree, double midtermGrade, double finalGrade);
 char calculateFinalLetterGrade(double finalNumberScore);
@@ -74,11 +42,13 @@ class COP3014 {
         string firstName;
         string lastName;
         string zNumber;
-        double quiz1 = 100;
-        double quiz2 = 100;
-        double quiz3 = 100;
-        double midtermExam = 100;
-        double finalExam = 100;
+        double quiz1;
+        double quiz2;
+        double quiz3;
+        bool presentOnMidterm;
+        double midtermExam;
+        bool presentOnFinal;
+        double finalExam;
         double finalNumberGrade;
         char finalLetterGrade;
 
@@ -131,6 +101,7 @@ int main()
     cout.precision(2);
 
     COP3014 student2("Giovanna", "Bruzzi", "Z2356824", 20, 19, 20, 98, 95);
+
     student2.outputStudent();
 
     return 0;
@@ -153,14 +124,18 @@ COP3014::COP3014(
     quiz1 = quiz1Param;
     quiz2 = quiz2Param;
     quiz3 = quiz3Param;
+    presentOnMidterm = true;
     midtermExam = midtermExamParam;
+    presentOnFinal = true;
     finalExam = finalExamParam;
     finalNumberGrade = calculateFinalNumberGrade(quiz1, quiz2, quiz3, midtermExam, finalExam);
     finalLetterGrade = calculateFinalLetterGrade(finalNumberGrade);
 }
 
 //no arguments constructor
-COP3014::COP3014(){}
+COP3014::COP3014():presentOnMidterm(false),presentOnFinal(false),midtermExam(100),finalExam(100)
+{}
+
 //getters
 string COP3014::getFirstName(){ return firstName; }
 string COP3014::getLastName(){ return lastName; }
@@ -177,11 +152,22 @@ void COP3014::setZNumber(string number){ zNumber = number; }
 void COP3014::setQuiz1(double grade){ quiz1 = grade; }
 void COP3014::setQuiz2(double grade){ quiz2 = grade; }
 void COP3014::setQuiz3(double grade){ quiz3 = grade; }
-void COP3014::setMidtermExam(double grade){ midtermExam = grade; }
-void COP3014::setFinalExam(double grade){ finalExam = grade; }
+void COP3014::setMidtermExam(double grade){
+    presentOnMidterm = true;
+    midtermExam = grade;
+}
+void COP3014::setFinalExam(double grade){
+    presentOnFinal = true;
+    finalExam = grade;
+}
 
 //displays the information of a student: including their z-number, and grades on all assignment to the screen.
 void COP3014::outputStudent(){
+
+    if(!presentOnMidterm || !presentOnFinal){
+        finalLetterGrade = 'F';
+    }
+
     cout << endl
          << "====================================================="
          << endl << endl
