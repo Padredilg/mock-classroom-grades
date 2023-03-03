@@ -9,31 +9,6 @@ Repository: https://github.com/Padredilg/mock-classroom-grades
 
 using namespace std;
 
-/*
-The class should also have the following public methods that
-can bring the objects (students of the class) to life and give them some functionality:
-
-a. Constructor and default constructor (we will learn on 02/28)
-b. Setter functions for all the member variables
-c. Getter functions for all the member variables
-d. A function that computes the student’s total grade
-e. A function that computes the student’s final letter grade
-f. A function that checks whether the student was absent on any exam, and then automatically fails them by giving them an F.
-g. An output function that displays the information of any student: including their z-number, and grades on all assignment to the screen.
-*/
-
-/*
-Every student has grades for each of the work assigned to them.
-These grades can be initialized in the constructor
-(initial value is 100, Canvas starts everyone off with 100)
-and later set using the setter functions
-(imagine the TAs grading your work and updating the grades).
-
-Importantly,  each  student  gets  a  total  grade  and  a  letter  grade  which  is  computed  for  them
-automatically.
-*/
-
-
 double calculateFinalNumberGrade(double quizOne, double quizTwo, double quizThree, double midtermGrade, double finalGrade);
 char calculateFinalLetterGrade(double finalNumberScore);
 
@@ -89,7 +64,7 @@ class COP3014 {
         void setFinalExam(double grade);
 
         //checks whether the student was absent on any exam, and then automatically fails them by giving them an F.
-        void checkIfAbsentOnExams();
+        bool absentOnAnyExam();
         //displays the information of a student: including their z-number, and grades on all assignment to the screen.
         void outputStudent();
 };
@@ -100,8 +75,17 @@ int main()
     cout.setf(ios::showpoint);
     cout.precision(2);
 
-    COP3014 student2("Giovanna", "Bruzzi", "Z2356824", 20, 19, 20, 98, 95);
+    COP3014 student("Mitchell", "Burns", "Z2356824", 20, 19, 20, 98, 95);
+    student.outputStudent();
 
+    COP3014 student2;
+    student2.setFirstName("Luanna");
+    student2.setLastName("Smith");
+    student2.setZNumber("Z2357543");
+    student2.setQuiz1(15);
+    student2.setQuiz2(19);
+    student2.setQuiz3(14);
+    student2.setMidtermExam(100);
     student2.outputStudent();
 
     return 0;
@@ -128,13 +112,10 @@ COP3014::COP3014(
     midtermExam = midtermExamParam;
     presentOnFinal = true;
     finalExam = finalExamParam;
-    finalNumberGrade = calculateFinalNumberGrade(quiz1, quiz2, quiz3, midtermExam, finalExam);
-    finalLetterGrade = calculateFinalLetterGrade(finalNumberGrade);
 }
 
-//no arguments constructor
-COP3014::COP3014():presentOnMidterm(false),presentOnFinal(false),midtermExam(100),finalExam(100)
-{}
+//no arguments constructor -- GET A BETTER SENSE IF SEETING THE EXAMS TO 100 INITIALLY IS WHAT PROFESSOR REALLY WANTS
+COP3014::COP3014():presentOnMidterm(false),presentOnFinal(false),midtermExam(100),finalExam(100){}
 
 //getters
 string COP3014::getFirstName(){ return firstName; }
@@ -145,6 +126,7 @@ double COP3014::getQuiz2(){ return quiz2; }
 double COP3014::getQuiz3(){ return quiz3; }
 double COP3014::getMidtermExam(){ return midtermExam; }
 double COP3014::getFinalExam(){ return finalExam; }
+
 //setters
 void COP3014::setFirstName(string name){ firstName = name; }
 void COP3014::setLastName(string name){ lastName = name; }
@@ -164,7 +146,10 @@ void COP3014::setFinalExam(double grade){
 //displays the information of a student: including their z-number, and grades on all assignment to the screen.
 void COP3014::outputStudent(){
 
-    if(!presentOnMidterm || !presentOnFinal){
+    finalNumberGrade = calculateFinalNumberGrade(quiz1, quiz2, quiz3, midtermExam, finalExam);
+    finalLetterGrade = calculateFinalLetterGrade(finalNumberGrade);
+
+    if(absentOnAnyExam()){
         finalLetterGrade = 'F';
     }
 
@@ -179,11 +164,24 @@ void COP3014::outputStudent(){
          << "      Midterm: " << midtermExam << endl
          << "      Final: " << finalExam << endl
          << "      Total Grade: " << finalNumberGrade << endl
-         << "      Final Grade: " << finalLetterGrade
-         << endl << endl
-         << "====================================================="
+         << "      Final Grade: " << finalLetterGrade << endl;
+
+    if(absentOnAnyExam()){
+        cout << endl
+             << "Note: Student was not present for one or more exams."
+             << endl << endl;
+    }
+
+    cout << "====================================================="
          << endl;
+
+
 };
+
+//checks whether the student was absent on any exam, and then automatically fails them by giving them an F.
+bool COP3014::absentOnAnyExam(){
+    return ( !presentOnMidterm || !presentOnFinal );
+}
 
 //computes the student’s total grade
 double calculateFinalNumberGrade(double quizOne, double quizTwo, double quizThree, double midtermGrade, double finalGrade){
@@ -209,8 +207,7 @@ char calculateFinalLetterGrade(double finalNumberScore){
     }
 }
 
-//checks whether the student was absent on any exam, and then automatically fails them by giving them an F.
-//void checkIfAbsentOnExams();
+
 
 
 
