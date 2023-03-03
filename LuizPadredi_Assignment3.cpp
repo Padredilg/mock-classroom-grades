@@ -10,45 +10,6 @@ Repository: https://github.com/Padredilg/mock-classroom-grades
 using namespace std;
 
 /*
-defines  and  tests  a  class  called  COP3014
-*/
-
-/*
-grading scheme:
-
-3 quizzes  20 points each  20%
-Midterm 100 points  30%
-Final  100 points  50%
-*/
-
-/*
-Based on the total grade of any student for the course,
-the letter grade of each student can be computed as follows
-
-Any grade of 90 or more is an A,
-any grade of 80 or more (but less than 90) is a B,
-any grade of 70 or more (but less than 80) is a C,
-any grade of 60 or more (but less than 70) is a D,
-and any grade below 60 is an F.
-*/
-
-
-
-
-/*
-This class needs to have some member variables.
-
-The first name,
-last name,
-the Z-number,
-the grades (quizzes),
-the total grade
-final letter grade
-
-all considered to be private member variables of this class.
-*/
-
-/*
 The class should also have the following public methods that
 can bring the objects (students of the class) to life and give them some functionality:
 
@@ -105,28 +66,23 @@ Gina Genius – Z98765432
     Final grade: A
 */
 
-/*
-Notes:
-
-- Equation to compute total grade:
-
-Total grade = (quiz1 + quiz2 +quiz3)/3 + midterm *0.3 + final * 0.5
-
-- Z-number is 8 digits long.
-*/
-
-/*
-
-INSTRUCTIONS TO SELF
-
-Define the class along with prototypes for each method as public, and properties as private
-
-then define each method down below
-
-then on main create a few students, then call their output methods to print to screen
-*/
+double calculateFinalNumberGrade(double quizOne, double quizTwo, double quizThree, double midtermGrade, double finalGrade);
+char calculateFinalLetterGrade(double finalNumberScore);
 
 class COP3014 {
+    private:
+        string firstName;
+        string lastName;
+        string zNumber;
+        double quiz1 = 100;
+        double quiz2 = 100;
+        double quiz3 = 100;
+        double midtermExam = 100;
+        double finalExam = 100;
+        double finalNumberGrade;
+        char finalLetterGrade;
+
+
     public:
         //Constructor with arguments
         COP3014(string firstName,
@@ -136,7 +92,9 @@ class COP3014 {
                 double quiz2,
                 double quiz3,
                 double midtermExam,
-                double finalExam);
+                double finalExam
+                );
+
         //no arguments constructor
         COP3014();
 
@@ -149,6 +107,7 @@ class COP3014 {
         double getQuiz3();
         double getMidtermExam();
         double getFinalExam();
+
         //Setter functions for all the member variables
         void setFirstName(string name);
         void setLastName(string name);
@@ -159,41 +118,20 @@ class COP3014 {
         void setMidtermExam(double grade);
         void setFinalExam(double grade);
 
-        //computes the student’s total grade
-        double calculateFinalNumberGrade();
-        //computes the student’s final letter grade
-        double calculateFinalLetterGrade();
         //checks whether the student was absent on any exam, and then automatically fails them by giving them an F.
         void checkIfAbsentOnExams();
         //displays the information of a student: including their z-number, and grades on all assignment to the screen.
         void outputStudent();
-
-    private:
-        string firstName;
-        string lastName;
-        string zNumber;
-        double quiz1 = 100;
-        double quiz2 = 100;
-        double quiz3 = 100;
-        double midtermExam = 100;
-        double finalExam = 100;
-        double finalNumberGrade;
-        char finalLetterGrade;
 };
 
 int main()
 {
-    COP3014 student = COP3014();
-    student.setFirstName("Luiz");
+    cout.setf(ios::fixed);
+    cout.setf(ios::showpoint);
+    cout.precision(2);
 
-    cout << student.getFirstName() << " " << student.getQuiz1() << endl;
     COP3014 student2("Giovanna", "Bruzzi", "Z2356824", 20, 19, 20, 98, 95);
-
-    cout << student2.getFirstName() << endl
-         << student2.getLastName() << endl
-         << student2.getZNumber() << endl
-         << student2.getQuiz2() << endl
-         << student2.getFinalExam();
+    student2.outputStudent();
 
     return 0;
 }
@@ -217,7 +155,10 @@ COP3014::COP3014(
     quiz3 = quiz3Param;
     midtermExam = midtermExamParam;
     finalExam = finalExamParam;
+    finalNumberGrade = calculateFinalNumberGrade(quiz1, quiz2, quiz3, midtermExam, finalExam);
+    finalLetterGrade = calculateFinalLetterGrade(finalNumberGrade);
 }
+
 //no arguments constructor
 COP3014::COP3014(){}
 //getters
@@ -239,12 +180,51 @@ void COP3014::setQuiz3(double grade){ quiz3 = grade; }
 void COP3014::setMidtermExam(double grade){ midtermExam = grade; }
 void COP3014::setFinalExam(double grade){ finalExam = grade; }
 
+//displays the information of a student: including their z-number, and grades on all assignment to the screen.
+void COP3014::outputStudent(){
+    cout << endl
+         << "====================================================="
+         << endl << endl
+         << firstName << " " << lastName << " - " << zNumber
+         << endl << endl
+         << "      Quiz 1: " << quiz1 << endl
+         << "      Quiz 2: " << quiz2 << endl
+         << "      Quiz 3: " << quiz3 << endl
+         << "      Midterm: " << midtermExam << endl
+         << "      Final: " << finalExam << endl
+         << "      Total Grade: " << finalNumberGrade << endl
+         << "      Final Grade: " << finalLetterGrade
+         << endl << endl
+         << "====================================================="
+         << endl;
+};
 
+//computes the student’s total grade
+double calculateFinalNumberGrade(double quizOne, double quizTwo, double quizThree, double midtermGrade, double finalGrade){
+    return (quizOne + quizTwo + quizThree)/3 + (midtermGrade * 0.3) + (finalGrade * 0.5);
+}
 
+//computes the student’s final letter grade
+char calculateFinalLetterGrade(double finalNumberScore){
+    if(finalNumberScore >= 90){
+        return 'A';
+    }
+    else if(finalNumberScore >= 80){
+        return 'B';
+    }
+    else if(finalNumberScore >= 70){
+        return 'C';
+    }
+    else if(finalNumberScore >= 60){
+        return 'D';
+    }
+    else{
+        return 'F';
+    }
+}
 
-
-/*NEXT, DEFINE THE remaining CLASS METHODS for calculations and output*/
-
+//checks whether the student was absent on any exam, and then automatically fails them by giving them an F.
+//void checkIfAbsentOnExams();
 
 
 
